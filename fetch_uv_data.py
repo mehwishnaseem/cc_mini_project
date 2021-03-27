@@ -2,10 +2,10 @@ import os
 import requests
 from pprint import pprint
 
-def fetch_uv_data():
+def fetch_uv_data(lat=51.52369, lng=-0.0395857):
     uv_url_template ='https://api.openuv.io/api/v1/uv?lat={lat}&lng={lng}&dt={data}'
-    my_latitude = '51.52369'
-    my_longitude = '-0.0395857' 
+    my_latitude = lat
+    my_longitude = lng
     my_date = '2018-11'
     headers = {'x-access-token': os.environ.get('OPENUV_TOKEN')}
 

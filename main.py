@@ -1,38 +1,25 @@
-from flask import Flask, jsonify, json, request
-from fetch_uv_data import fetch_uv_data
-from dbase import insert_uv_index, select_data, insert_data
+from flask import Flask, jsonify, request
+from fetch_uv_data import fetch_uv_data, retrieve_data
+from dbase import select_data, insert_data, delete_record, modify_record
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello():
-    html = "<h1>Hello from {name}!</h1>\nGoto /api to fetch UV data".format(name="Mehwish") 
-    return html
-
-@app.route("/api", methods=['GET'])
-def get_uv_data():
-    uv = fetch_uv_data()
-    print(uv['result']['uv'], uv['result']['uv_max'], uv['result']['uv_max_time'], uv['result']['uv_time'])
-    insert_uv_index(uv['result']['uv'], uv['result']['uv_max'], uv['result']['uv_max_time'], uv['result']['uv_time'])
-    return jsonify(uv)
-
-
+# GET
 @app.route("/location/<city>/", methods=['GET'])
 def get_data(city):
-    lat, lng = select_data(city)
-    # print(str(city) + ", " + str(lat) + ", " + str(lng))
     try:
-        uv = fetch_uv_data(lat, lng)
-        return uv, 200
+        lat, lng = select_data(city)
+        ext_api_data = retrieve_data(lat, lng)
+        return jsonify(ext_api_data), 200
     except:
-        return 404
+        return jsonify({'error':'city not found'}), 404
 
 
-
+# POST
 @app.route('/add', methods=['POST'])
 def create_a_record():
-    if not request.json or not 'city' in request.json:
-        return jsonify({'error':'the city record needs to have a lat & long'}), 400
+    if not request.json or not all(k in request.json for k in ['city', 'lat', 'lng']):
+        return jsonify({'error':'the city record needs to have a city, lat & long'}), 400
     new_record = {
         'city': request.json['city'],
         'lat' : request.json.get('lat', ''),
@@ -40,6 +27,36 @@ def create_a_record():
     }
     insert_data(new_record['city'], new_record['lat'], new_record['lng'])
     return jsonify({'message':'new city created: /add/{} and lat:{}, lng:{}'.format(new_record['city'], new_record['lat'], new_record['lng'])}), 201
+
+
+# PUT
+@app.route('/edit', methods=['PUT']) 
+def edit_record():
+    print(request.json)
+    if not request.json or not all(k in request.json for k in ['city', 'lat', 'lng']):
+        return jsonify({'error':'the city record needs to have a city, lat & long'}), 400
+    new_record = {
+        'city': request.json['city'],
+        'lat' : request.json.get('lat', ''),
+        'lng' : request.json.get('lng', ''),
+    }
+    
+    status = modify_record(new_record['city'], new_record['lat'], new_record['lng'])
+    if status:
+        return jsonify({'success': f'Modified {new_record["city"]}'}), 201
+    else:    
+        return jsonify({'error':'city name not found!'}), 404 
+
+
+# DELETE
+@app.route('/delete/<city>', methods=['DELETE']) 
+def delete_a_record(city): 
+    
+    status = delete_record(city)
+    if status:
+        return jsonify({'success': f'Deleted {city}'}), 200
+    else:    
+        return jsonify({'error': 'Record not found'}), 404     
     
 
 if __name__ == "__main__":

@@ -42,10 +42,8 @@ def edit_record():
     }
     
     status = modify_record(new_record['city'], new_record['lat'], new_record['lng'])
-    if status:
-        return jsonify({'success': f'Modified {new_record["city"]}'}), 201
-    else:    
-        return jsonify({'error':'city name not found!'}), 404 
+    
+    return jsonify({'success': status}), 201
 
 
 # DELETE

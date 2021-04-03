@@ -74,10 +74,13 @@ def modify_record(city, lat, lng):
         cursor.execute(query, (lat, lng, city))
         connection.commit()
         connection.close()
-        return True
+        return f'Modified record for {city}'
     else:
+        query = "INSERT INTO `city` (`city`, `lat`, `lng`) VALUES (%s, %s, %s)"    
+        cursor.execute(query, (city, lat, lng))
+        connection.commit()
         connection.close()
-        return False
+        return f'Created new record for {city}'
 
 
 

@@ -2,3 +2,5 @@ Flask
 arrow
 pymysql
 json
+requests
+flask_httpauth 

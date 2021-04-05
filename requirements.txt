@@ -1,6 +1,7 @@
 Flask
 arrow
 pymysql
-json
 requests
-flask_httpauth 
+flask_httpauth
+gunicorn
+ngenx

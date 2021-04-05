@@ -1,5 +1,20 @@
+### ARCHITECTURE
+DATABASE: AWS RDS
+REST API SERVER: NGINX + GUNICORN +FLASK
+
+### FEATURES IMPLEMENTED:
+REST-based service interface for CRUD operations 
+Interaction with external REST services
+Use of an external Cloud database for persisting information.(AWS RDS)
+
+### ADDITIONAL FEATURES Implemented:
+Serving the application over https
+Implementing hash-based authentication
+Implementing user accounts and access management
+
 # REST API
 Our REST API makes use for two external APIs to deliver information for surfers for potential times when tides are high and UV index is moderate.
+
 
 ## External APIs
 - OpenUV (UV Index Forecast)

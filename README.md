@@ -1,10 +1,13 @@
 ### ARCHITECTURE
 DATABASE: AWS RDS
+
 REST API SERVER: NGINX + GUNICORN +FLASK
 
 ### FEATURES IMPLEMENTED:
 REST-based service interface for CRUD operations 
+
 Interaction with external REST services
+
 Use of an external Cloud database for persisting information.(AWS RDS)
 
 ### ADDITIONAL FEATURES Implemented:

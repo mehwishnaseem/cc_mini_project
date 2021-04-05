@@ -8,9 +8,9 @@
 -   Use of an external Cloud database for persisting information.(AWS RDS)
 
 ### ADDITIONAL FEATURES Implemented:
--   Serving the application over https
--   Implementing hash-based authentication
--   Implementing user accounts and access management
+-   Serving the application over https.
+-   Implementing hash-based authentication.
+-   Implementing user accounts and access management.
 
 # REST API
 Our REST API makes use for two external APIs to deliver information for surfers for potential times when tides are high and UV index is moderate.

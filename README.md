@@ -11,6 +11,7 @@
 -   Serving the application over https.
 -   Implementing hash-based authentication.
 -   Implementing user accounts and access management.
+-   Securing the database with role-based policies.
 
 # REST API
 Our REST API makes use for two external APIs to deliver information for surfers for potential times when tides are high and UV index is moderate.

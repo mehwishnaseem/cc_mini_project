@@ -1,0 +1,5 @@
+.DS_Store
+Data/
+MLEnd_starter_kit.ipynb
+__pycache__/
+.ipynb_checkpoints/
